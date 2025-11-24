@@ -48,19 +48,23 @@ class MessageHandler(MessagesText):
         if message.text:
             print(message.from_user.username, message.text)
             username = message.chat.username if message.chat else "usuário"
-            await message.reply("Realizando a busca...")
-            try:
-                # Start the crewai integration for webscrping
-                crew = CrewaiIntegration(username, message.text)
-                result = crew._run()
+            if (self.verify_message(message.text)):
+                try:
+                    # Start the crewai integration for webscrping
+                    await message.reply("Realizando a busca...")
+                    crew = CrewaiIntegration(username, message.text)
+                    result = crew._run()
 
-                await message.reply("Busca concluída! Processando resultados...")
-                print("CrewAI terminou")
-                await message.reply(result)
-                
-            except Exception as e:
-                print(f"Erro ao executar crew: {e}")
-                await message.reply(f"Ocorreu um erro durante a busca: {str(e)}")
+                    await message.reply("Busca concluída! Processando resultados...")
+                    print("CrewAI terminou")
+                    await message.reply(result)
+                    
+                except Exception as e:
+                    print(f"Erro ao executar crew: {e}")
+                    await message.reply(f"Ocorreu um erro durante a busca: {str(e)}")
+
+            else:
+                await message.reply(f"Você precisa me informar seu estado e escolaridade para realizar a busca\nUse /help para ajudar")
 
 
     async def handle_unsupported(self, client: Client, message):

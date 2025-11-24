@@ -16,5 +16,9 @@ wheels/
 # crewai
 .DS_Store
 
+# output for crewai agents
+output/*
+!output/output.txt
+
 # dotenv
 .env
