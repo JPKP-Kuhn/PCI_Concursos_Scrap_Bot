@@ -65,7 +65,7 @@ PCI_Concursos_scrap_bot/
 
 1. **Clone o repositório:**
    ```bash
-   git clone <url-do-repositorio>
+   git clone https://github.com/JPKP-Kuhn/PCI_Concursos_Scrap_Bot.git
    cd PCI_Concursos_scrap_bot
    ```
 
