@@ -2,6 +2,7 @@ from pyrogram.client import Client
 from pyrogram import filters
 # For basic messages
 from .messages_text import MessagesText
+from .crew_integration import CrewaiIntegration
 
 __all__ = ["MessageHandler"]
 
@@ -46,9 +47,20 @@ class MessageHandler(MessagesText):
         """Handle the text message."""
         if message.text:
             print(message.from_user.username, message.text)
-            user_id = message.from_user.id if message.from_user else None
-            #response = self.get_text_response(message.text, user_id)
-            await message.reply("ainda em produção")
+            username = message.chat.username if message.chat else "usuário"
+            await message.reply("Realizando a busca...")
+            try:
+                # Start the crewai integration for webscrping
+                crew = CrewaiIntegration(username, message.text)
+                result = crew._run()
+
+                await message.reply("Busca concluída! Processando resultados...")
+                print("CrewAI terminou")
+                await message.reply(result)
+                
+            except Exception as e:
+                print(f"Erro ao executar crew: {e}")
+                await message.reply(f"Ocorreu um erro durante a busca: {str(e)}")
 
 
     async def handle_unsupported(self, client: Client, message):

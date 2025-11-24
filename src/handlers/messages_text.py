@@ -3,10 +3,10 @@ class MessagesText:
 
     START_RESPONSE = f"Sou o bot que te ajuda a buscar por novos concursos públicos, do que você precisa? Digite /help para ver as opções disponíveis."
 
-    HELP_RESPONSE = f"""
-    - Primeiro, me informe qual a região, 'Norte', 'Sul', que você está buscando concursos, depois o seu estado, 'São Paulo', 'Rio de Janeiro', 'Minas Gerais', etc.
-    - Também preciso saber qual a sua escolaridade, por exemplo, 'Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', etc.
-    """
+    HELP_RESPONSE = (
+    "- Primeiro, me informe qual a região, 'Norte', 'Sul', que você está buscando concursos, depois o seu estado, 'São Paulo', 'Rio de Janeiro', 'Minas Gerais', etc.\n",
+    "- Também preciso saber qual a sua escolaridade, por exemplo, 'Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', etc.\n"
+    )
  
     def get_greeting(self, username: str | None = None) -> str:
         """Retorna a mensagem de saudação com o username do usuário.

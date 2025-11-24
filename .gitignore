@@ -8,6 +8,7 @@ wheels/
 
 # pyrogram
 *.session
+*.session-journal
 
 # Virtual environments
 .venv

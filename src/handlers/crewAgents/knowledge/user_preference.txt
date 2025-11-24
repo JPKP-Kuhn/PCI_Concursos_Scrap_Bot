@@ -1,0 +1,5 @@
+1. Identificar qual é o assunto tópico de interesse do usuário e
+2. Fazer webscraping do site PCI Concursos para encontrar informaçãoes relevantes
+que possa ajudar o usuário.
+3. Organizar todas essas informações coletadas.
+4. Apresentar um resumo para o usuáiro
