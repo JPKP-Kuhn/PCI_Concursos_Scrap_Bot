@@ -9,9 +9,11 @@ class CrewaiIntegration:
     def __init__(self, username, topic):
         self.username = username
         self.topic = topic
+        # url for the webscrap
         self.url = "https://www.pciconcursos.com.br/"
 
 
+    # inputs for crewai
     def _run(self):
         inputs = {
             'user': self.username,

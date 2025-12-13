@@ -65,7 +65,7 @@ content_resume_task:
 final_report_task:
   description: >
     Utilize os resumos fornecidos pelo agente de resumo de conteúdo
-    para compilar um relatório final abrangente sobre {topic}.
+    para compilar um relatório final abrangente sobre {topic} para ser enviado ao telegram.
     Você poderá usar um arquivo json que contenha os dados sobre a pesquisa, mas 
     você repassará as informações seguindo uma estrutura:
     - Dados utilizados para ser realizada a busca, links dos sites de notícias
@@ -73,7 +73,9 @@ final_report_task:
       Sobre os concursos identificados, é muito importante você fornecer as url das páginas
       que você usou para pesquisar por esses concurso.
     Organize as informações de maneira clara e coesa para comunicar
-    as descobertas de forma eficaz.
+    as descobertas de forma eficaz com {user}. Seu texto será enviado pelo Telegram,
+    portanto você precisa adaptar a saída markdown, que não é suportada pelo Telegram para 
+    um texto normal txt que será repassado para {user} através do Telegram.
   expected_output: >
     Um relatório final em markdown detalhado que reúne todas as descobertas sobre {topic},
     atendendo às necessidades de {user}.

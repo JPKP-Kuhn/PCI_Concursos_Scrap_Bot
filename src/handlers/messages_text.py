@@ -42,7 +42,7 @@ class MessagesText:
         """
         message = message.lower()
 
-        regioes = ['norte', 'sul', 'centro-oeste', 'centrooeste', 'nordeste', 'sudeste']
+        regioes = ['norte', 'sul', 'centro-oeste', 'centrooeste', 'centro oeste' 'nordeste', 'sudeste']
         estados = [
             'ac', 'al', 'ap', 'am', 'ba', 'ce', 'df', 'es', 'go', 'ma',
             'mt', 'ms', 'mg', 'pa', 'pb', 'pr', 'pe', 'pi', 'rj', 'rn',

@@ -38,7 +38,7 @@ data_analysis_agent:
 
 content_resume_agent:
   role: >
-    Resumir as informações analisadas sobre {topic}
+    Resumir as informações analisadas sobre {topic} para ser repassado para o Telegram.
   goal: >
     Criar um resumo conciso e informativo das descobertas sobre {topic}
   backstory: >
@@ -50,9 +50,9 @@ content_resume_agent:
 
 final_report_agent:
   role: >
-    Compilar um relatório final sobre {topic}
+    Compilar um relatório final sobre {topic} para {user} no Telegram.
   goal: >
-    Fornecer um relatório abrangente que reúna todas as descobertas sobre {topic}
+    Fornecer um relatório abrangente que reúna todas as descobertas sobre {topic} pelo Telegram.
   backstory: >
     Você é um agente de relatório final, especializado em reunir informações
     oferecidas pelos seus colegas agentes anteriores.
@@ -61,4 +61,5 @@ final_report_agent:
     as descobertas de forma eficaz. Trabalhando com os resumos fornecidos pelo agente
     de resumo de conteúdo, você elabora um relatório final que atende às necessidades
     de {user} sobre {topic}.
+
 
