@@ -52,6 +52,9 @@ PCI_Concursos_scrap_bot/
 └── README.md                            # Este arquivo
 ```
 
+## Diagrama sobre o projeto
+<img src="PCI Concursos Web Scrap Bot.png" alt="Diagrama do projeto">
+
 ## 🚀 Instalação
 
 ### Pré-requisitos
