@@ -12,6 +12,25 @@ class MessageHandler(MessagesText):
         self.app = client
         self.setup_handlers()
 
+
+    async def _send_long_message(self, message, content, chunk_size: int = 4096) -> None:
+        """
+        Send a message to Telegram respecting the 4096 character limit.
+        If the content is longer, it will be split into multiple messages.
+        """
+        # Garante que o conteúdo é string, independente do tipo retornado pelos agentes
+        text = str(content) if content is not None else ""
+
+        # Se a mensagem couber em um único envio, já retorna
+        if len(text) <= chunk_size:
+            await message.reply(text)
+            return
+
+        # Caso contrário, envia em partes
+        for start in range(0, len(text), chunk_size):
+            await message.reply(text[start:start + chunk_size])
+
+
     def setup_handlers(self) -> None:
         # Command handlers
         self.app.on_message(filters.command('start'))(self.handle_start)
@@ -57,7 +76,7 @@ class MessageHandler(MessagesText):
 
                     await message.reply("Busca concluída! Processando resultados...")
                     print("CrewAI terminou")
-                    await message.reply(result)
+                    await self._send_long_message(message, result)
                     
                 except Exception as e:
                     print(f"Erro ao executar crew: {e}")
