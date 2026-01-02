@@ -67,16 +67,19 @@ class MessageHandler(MessagesText):
         if message.text:
             print(message.from_user.username, message.text)
             username = message.chat.username if message.chat else "usuário"
+            user_id = message.from_user.id
+
             if (self.verify_message(message.text)):
                 try:
                     # Start the crewai integration for webscrping
                     await message.reply("Realizando a busca...")
-                    crew = CrewaiIntegration(username, message.text)
+                    crew = CrewaiIntegration(username, message.text, user_id)
                     result = crew._run()
 
                     await message.reply("Busca concluída! Processando resultados...")
                     print("CrewAI terminou")
                     await self._send_long_message(message, result)
+                    await self._send_long_message(message, 'terminou teste')
                     
                 except Exception as e:
                     print(f"Erro ao executar crew: {e}")

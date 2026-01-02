@@ -1,7 +1,7 @@
 from pyrogram.client import Client
 
 from settings import *
-from handlers import messages
+from handlers import messages_handler
 
 # Start the telegram bot
 def build_bot() -> Client:
@@ -11,7 +11,7 @@ def build_bot() -> Client:
         api_hash=TELEGRAM_API_HASH,
         bot_token=TELEGRAM_BOT_TOKEN
     )
-    messages.MessageHandler(bot_app)
+    messages_handler.MessageHandler(bot_app)
     print("Bot iniciado") # Message to know if the bot was started
     return bot_app
 

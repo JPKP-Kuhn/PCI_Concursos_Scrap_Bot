@@ -7,9 +7,10 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 class CrewaiIntegration:
     """ Integração entre crewai e chatbot """
-    def __init__(self, username, topic):
+    def __init__(self, username, topic, user_id):
         self.username = username
         self.topic = topic
+        self.user_id = user_id
         # url for the webscrap
         self.url = "https://www.pciconcursos.com.br/"
 
