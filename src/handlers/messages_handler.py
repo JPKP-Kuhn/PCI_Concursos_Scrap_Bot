@@ -3,6 +3,7 @@ from pyrogram import filters
 # For basic messages
 from .messages_text import MessagesText
 from .crew_integration import CrewaiIntegration
+from .scrap_csv import Scrap_csv
 
 __all__ = ["MessageHandler"]
 
@@ -11,6 +12,20 @@ class MessageHandler(MessagesText):
     def __init__(self, client: Client):
         self.app = client
         self.setup_handlers()
+
+
+    def setup_handlers(self) -> None:
+        # Command handlers
+        self.app.on_message(filters.command('start'))(self.handle_start)
+        self.app.on_message(filters.command('help'))(self.handle_help)
+
+        # Text handler, only text
+        self.app.on_message(filters.text & ~filters.command(["start", "help"]))(self.handle_text)
+
+        # Unsupported message types (photos, audio, stickers, etc.)
+        self.app.on_message(
+                (filters.photo | filters.video | filters.audio | filters.voice | filters.sticker | filters.animation | filters.document)
+                )(self.handle_unsupported)
 
 
     async def _send_long_message(self, message, content, chunk_size: int = 4096) -> None:
@@ -31,21 +46,6 @@ class MessageHandler(MessagesText):
             await message.reply(text[start:start + chunk_size])
 
 
-    def setup_handlers(self) -> None:
-        # Command handlers
-        self.app.on_message(filters.command('start'))(self.handle_start)
-        self.app.on_message(filters.command('help'))(self.handle_help)
-
-        # Text handler, only text
-        self.app.on_message(filters.text & ~filters.command(["start", "help"]))(self.handle_text)
-
-        # Unsupported message types (photos, audio, stickers, etc.)
-        self.app.on_message(
-            (filters.photo | filters.video | filters.audio | filters.voice | filters.sticker | filters.animation | filters.document)
-            )(self.handle_unsupported)
-
-
-
     # Command handlers
     async def handle_start(self, client: Client, message):
         """Handle the start command."""
@@ -61,6 +61,41 @@ class MessageHandler(MessagesText):
         await message.reply(self.HELP_RESPONSE.format("help"))
 
 
+
+    async def _webscrap(self, username, user_id, client: Client, message):
+        """ Iniciar busca com crewai"""
+        try:
+            # Start the crewai integration for webscrping
+            await message.reply("Realizando a busca...")
+            crew = CrewaiIntegration(username, message.text, user_id)
+            result = crew._run()
+
+            await message.reply("Busca concluída! Processando resultados...")
+            print("CrewAI terminou")
+            await self._send_long_message(message, result)
+
+        except Exception as e:
+            print(f"Erro ao executar crew: {e}")
+            await message.reply(f"Ocorreu um erro durante a busca: {str(e)}")
+
+    async def _create_csv(self, user_id, client: Client, message):
+        """Cria o arquivo CSV com os concursos do estado solicitado pelo usuário."""
+        try:
+            # Extrai a sigla do estado da mensagem
+            state_abbreviation = self.extract_state_abbreviation(message.text)
+            
+            if state_abbreviation is None:
+                await message.reply("Não foi possível identificar o estado na sua mensagem. Por favor, tente novamente informando o estado.")
+                return
+            
+            # Executa o scraping e cria o CSV
+            scrap_csv = Scrap_csv()
+            scrap_csv.run(user_id, state_abbreviation)
+            
+        except Exception as e:
+            print(f"Erro ao criar CSV: {e}")
+            await message.reply(f"Ocorreu um erro ao processar os dados: {str(e)}")
+
     # Text handlers
     async def handle_text(self, client: Client, message):
         """Handle the text message."""
@@ -70,21 +105,8 @@ class MessageHandler(MessagesText):
             user_id = message.from_user.id
 
             if (self.verify_message(message.text)):
-                try:
-                    # Start the crewai integration for webscrping
-                    await message.reply("Realizando a busca...")
-                    crew = CrewaiIntegration(username, message.text, user_id)
-                    result = crew._run()
-
-                    await message.reply("Busca concluída! Processando resultados...")
-                    print("CrewAI terminou")
-                    await self._send_long_message(message, result)
-                    await self._send_long_message(message, 'terminou teste')
-                    
-                except Exception as e:
-                    print(f"Erro ao executar crew: {e}")
-                    await message.reply(f"Ocorreu um erro durante a busca: {str(e)}")
-
+                await self._create_csv(user_id, client, message)
+                await self._webscrap(username, user_id, client, message)
             else:
                 await message.reply(f"Você precisa me informar seu estado e escolaridade para realizar a busca\nUse /help para ajudar")
 

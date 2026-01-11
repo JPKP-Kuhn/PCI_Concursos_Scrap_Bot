@@ -20,5 +20,9 @@ wheels/
 output/*
 !output/output.txt
 
+# csv files from src/handlers/scrap_csv.py
+users_csv/*
+!users_csv/readme.txt
+
 # dotenv
 .env

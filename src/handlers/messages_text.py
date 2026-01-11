@@ -72,3 +72,51 @@ class MessagesText:
 
         return (contem_regiao or contem_estado) and contem_escolaridade
 
+    def extract_state_abbreviation(self, message: str) -> str | None:
+        """Extrai a sigla do estado da mensagem do usuário.
+        
+        Args:
+            message: Mensagem enviada pelo usuário
+            
+        Returns:
+            Sigla do estado (ex: 'SP', 'RJ', 'MG') ou None se não encontrar
+        """
+        message = message.lower()
+        
+        # Mapeamento de nomes de estados para siglas
+        estado_to_sigla = {
+            'ac': 'AC', 'acre': 'AC',
+            'al': 'AL', 'alagoas': 'AL',
+            'ap': 'AP', 'amapá': 'AP', 'amapa': 'AP',
+            'am': 'AM', 'amazonas': 'AM',
+            'ba': 'BA', 'bahia': 'BA',
+            'ce': 'CE', 'ceará': 'CE', 'ceara': 'CE',
+            'df': 'DF', 'distrito federal': 'DF',
+            'es': 'ES', 'espírito santo': 'ES', 'espirito santo': 'ES',
+            'go': 'GO', 'goiás': 'GO', 'goias': 'GO',
+            'ma': 'MA', 'maranhão': 'MA', 'maranhao': 'MA',
+            'mt': 'MT', 'mato grosso': 'MT',
+            'ms': 'MS', 'mato grosso do sul': 'MS',
+            'mg': 'MG', 'minas gerais': 'MG',
+            'pa': 'PA', 'pará': 'PA', 'para': 'PA',
+            'pb': 'PB', 'paraíba': 'PB', 'paraiba': 'PB',
+            'pr': 'PR', 'paraná': 'PR', 'parana': 'PR',
+            'pe': 'PE', 'pernambuco': 'PE',
+            'pi': 'PI', 'piauí': 'PI', 'piaui': 'PI',
+            'rj': 'RJ', 'rio de janeiro': 'RJ',
+            'rn': 'RN', 'rio grande do norte': 'RN',
+            'rs': 'RS', 'rio grande do sul': 'RS',
+            'ro': 'RO', 'rondônia': 'RO', 'rondonia': 'RO',
+            'rr': 'RR', 'roraima': 'RR',
+            'sc': 'SC', 'santa catarina': 'SC',
+            'sp': 'SP', 'são paulo': 'SP', 'sao paulo': 'SP',
+            'se': 'SE', 'sergipe': 'SE',
+            'to': 'TO', 'tocantins': 'TO',
+        }
+        
+        # Busca pela sigla ou nome completo do estado
+        for estado, sigla in estado_to_sigla.items():
+            if estado in message:
+                return sigla
+        
+        return None
