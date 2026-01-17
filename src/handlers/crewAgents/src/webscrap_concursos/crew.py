@@ -6,8 +6,11 @@ from typing import List
 # Tools are defined in tools/
 from .tools.ConcursoScrapeTool import ConcursoScrapeTool
 from .tools.ScrapflyTool import ScrapflyTool
+from .tools.ReadUserPreferencesTool import file_read_tool
+
 concurso_scrape_tool = ConcursoScrapeTool()
 scrapfly_tool = ScrapflyTool()
+read_preferences_tool = file_read_tool()
 
 # Agents and Tasks are defined in config/agents.yaml and config/tasks.yaml
 @CrewBase
@@ -25,7 +28,7 @@ class WebscrapConcursos():
             allow_delegation=False,
             memory=True,
             reasoning=True,
-            tools=[],
+            tools=[read_preferences_tool],
             allow_code_executer=False,
             multimodal=False
         )
@@ -85,35 +88,35 @@ class WebscrapConcursos():
     def content_planner_task(self) -> Task:
         return Task(
             config=self.tasks_config['context_planner_text'], # type: ignore[index]
-            output_file='output/content_planner.json'
+            output_file='src/handlers/crewAgents/knowledge/output/content_planner.json'
         )
 
     @task
     def webscrap_task(self) -> Task:
         return Task(
             config=self.tasks_config['webscrap_task'], # type: ignore[index]
-            output_file='output/webscrap.md'
+            output_file='src/handlers/crewAgents/knowledge/output/webscrap.md'
         )
 
     @task
     def data_analysis_task(self) -> Task:
         return Task(
             config=self.tasks_config['data_analysis_task'], # type: ignore[index]
-            output_file='output/data_analysis.md'
+            output_file='src/handlers/crewAgents/knowledge/output/data_analysis.md'
         )
 
     @task
     def content_resume_task(self) -> Task:
         return Task(
             config=self.tasks_config['content_resume_task'], # type: ignore[index]
-            output_file='output/content_resume.md'
+            output_file='src/handlers/crewAgents/knowledge/output/content_resume.md'
         )
 
     @task
     def final_report_task(self) -> Task:
         return Task(
             config=self.tasks_config['final_report_task'], # type: ignore[index]
-            output_file='output/final_report.md'
+            output_file='src/handlers/crewAgents/knowledge/output/final_report.md'
         )
 
     # Configures the crew
