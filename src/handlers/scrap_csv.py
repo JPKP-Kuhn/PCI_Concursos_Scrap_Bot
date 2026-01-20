@@ -205,7 +205,7 @@ class Scrap_csv:
         date_now = today.strftime("%d%m%Y")
 
         # Create user directory if it doesn't exist
-        user_dir = "./crewAgents/knowledge/users_csv/"
+        user_dir = "src/handlers/crewAgents/knowledge/users_csv/"
         if not os.path.exists(user_dir):
             os.makedirs(user_dir)
 

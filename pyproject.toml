@@ -1,6 +1,6 @@
 [project]
 name = "pci-concursos-scrap-bot"
-version = "0.3.0"
+version = "0.4.0"
 description = "Chatbot de telegram que busca concursos públicos através de webscraping pela biblioteca crewai"
 authors = [{ name = "João Pedro Kuhn", email = "pedrojoaojpk@gmail.com" }]
 readme = "README.md"
@@ -10,6 +10,9 @@ dependencies = [
     "crewai>=1.5.0",
     "crewai-tools>=1.5.0",
     "dotenv>=0.9.9",
+    "langchain>=1.2.6",
+    "langchain-groq>=1.1.1",
+    "langchain-openai>=1.1.7",
     "litellm>=1.80.10",
     "pandas>=2.3.3",
     "pyrogram>=2.0.106",
