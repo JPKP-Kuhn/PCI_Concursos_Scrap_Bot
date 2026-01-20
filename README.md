@@ -21,6 +21,9 @@ Este projeto é um chatbot inteligente que ajuda usuários a encontrar concursos
 - **CrewAI Tools** - Ferramentas para os agentes (webscraping, etc.)
 - **Scrapfly SDK** - API para webscraping avançado
 - **python-dotenv** - Gerenciamento de variáveis de ambiente
+- **pandas** - Análise e manipulação de dados para CSV
+- **BeautifulSoup4** - Para análise de HTML
+- **requests** - Para fazer requisições HTTP
 - **UV** - Gerenciador de dependências e pacotes Python
 
 ## 📦 Estrutura do Projeto
@@ -31,12 +34,14 @@ PCI_Concursos_scrap_bot/
 │   ├── main.py                          # Ponto de entrada do bot
 │   ├── settings.py                      # Configurações e variáveis de ambiente
 │   └── handlers/
-│       ├── messages.py                  # Handler de mensagens do Telegram
+│       ├── messages_handler.py           # Handler de mensagens do Telegram
 │       ├── messages_text.py            # Textos e validações de mensagens
 │       ├── crew_integration.py         # Integração com CrewAI
+│       ├── scrap_csv.py                # Lógica para salvar concursos em CSV
 │       └── crewAgents/
 │           ├── knowledge/
-│           │   └── user_preference.txt # Preferências do usuário
+│           │   ├── user_preference.txt # Preferências do usuário
+│           │   └── users_csv/          # Diretório para CSVs de usuários
 │           └── src/
 │               └── webscrap_concursos/
 │                   ├── crew.py         # Configuração da equipe CrewAI
@@ -45,6 +50,7 @@ PCI_Concursos_scrap_bot/
 │                   │   └── tasks.yaml  # Configuração das tarefas
 │                   └── tools/
 │                       ├── ConcursoScrapeTool.py  # Tool para scraping do PCI Concursos
+│                       ├── ReadUserPreferencesTool.py # Tool para ler preferências do usuário
 │                       └── ScrapflyTool.py        # Tool para scraping com Scrapfly
 ├── output/                              # Arquivos gerados pelos agentes
 ├── pyproject.toml                       # Configuração do projeto e dependências
@@ -203,12 +209,14 @@ O bot irá:
 
 Os agentes CrewAI podem ser testados diretamente através da integração no bot. Quando você enviar uma mensagem válida, os agentes serão executados automaticamente.
 
-Os resultados intermediários são salvos na pasta `output/`:
-- `content_planner.json` - Plano de pesquisa gerado
-- `webscrap.md` - Dados coletados do webscraping
-- `data_analysis.md` - Análise dos dados
-- `content_resume.md` - Resumo do conteúdo
-- `final_report.md` - Relatório final
+Os resultados intermediários e os arquivos CSV gerados são salvos nas seguintes pastas:
+- `output/` - Para resultados intermediários dos agentes de IA, como:
+  - `content_planner.json` - Plano de pesquisa gerado
+  - `webscrap.md` - Dados coletados do webscraping
+  - `data_analysis.md` - Análise dos dados
+  - `content_resume.md` - Resumo do conteúdo
+  - `final_report.md` - Relatório final
+- `src/handlers/crewAgents/knowledge/users_csv/` - Para os arquivos CSV dos concursos, organizados por ID de usuário (ex: `123456_DDMMYYYY.csv`).
 
 ## 📝 Agentes CrewAI
 
@@ -241,7 +249,7 @@ Para modificar os agentes CrewAI:
 
 ## 📄 Licença
 
-Este projeto é baseado no template [bot_telegram](https://github.com/sergio-r1/bot_telegram) e foi adaptado para incluir funcionalidades de webscraping com CrewAI.
+Este projeto é baseado no template [bot_telegram](https://github.com/sergio-r1/bot_telegram) e para o webscrap o [PCIConcursos](https://github.com/JPKP-Kuhn/PCIConcursos) e foi adaptado para incluir funcionalidades de webscraping com CrewAI.
 
 ## 🤝 Contribuindo
 
