@@ -22,9 +22,10 @@ class CrewaiIntegration:
         """
         inputs = {
             'user': self.username,
+            'user_id': self.user_id,
             'topic': self.topic,
             'url': self.url,
-            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            'timestamp': datetime.now().strftime("%d%m%Y")
         }
         try:
             result = WebscrapConcursos().crew().kickoff(inputs=inputs)
