@@ -52,8 +52,8 @@ class MessageHandler(MessagesText):
         username = message.chat.username if message.chat else None
         greeting = self.get_greeting(username)
         print(f"Start called by {message.chat.username}")
-        await message.reply(greeting)
         await message.reply(self.START_RESPONSE.format("start"))
+        await message.reply(greeting)
 
     async def handle_help(self, client: Client, message):
         """Handle the help command."""

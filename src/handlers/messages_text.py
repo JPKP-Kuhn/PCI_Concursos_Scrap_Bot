@@ -3,7 +3,7 @@ class MessagesText:
 
     DEFAULT_RESPONSE = "Sem suporte, use /help para saber como eu posso te ajudar."
 
-    START_RESPONSE = f"Sou o bot que te ajuda a buscar por novos concursos públicos, do que você precisa? Digite /help para ver as opções disponíveis."
+    START_RESPONSE = f"Sou o bot que te ajuda a buscar por novos concursos públicos. Escreva em uma única mensagem de texto, o estado e o nível de escolaridade que você quer pesquisar, você também pode me passar mais informações sobre os concurso. Do que você precisa? Digite /help para ver as opções disponíveis."
 
     HELP_RESPONSE = """
         - Primeiro, me informe qual a região, 'Norte', 'Sul', que você está buscando concursos, depois o seu estado, 'São Paulo', 'Rio de Janeiro', 'Minas Gerais', etc;\n- Também preciso saber qual a sua escolaridade, por exemplo, 'Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', etc.\n
